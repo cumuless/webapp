@@ -31,7 +31,7 @@ const LoginPage = () => {
       </Flex>
       <Link href="/login">
         <Button variant="ghost" color="gray" size="2">
-          Not ameen@cumuless.com?
+          Not hello@cumuless.com?
         </Button>
       </Link>
     </Flex>

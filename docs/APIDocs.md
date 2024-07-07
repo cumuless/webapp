@@ -56,6 +56,16 @@ Base URL: http://api.testing.cumuless.com/v1
   Slab = "Slab"      // Slab
   ```
 
+- enum ContentType
+
+  ```
+  PDF = 'PDF'        // PDF file accessible by URL
+  GDoc = 'GDoc'      // A Google Doc
+  GSheet = 'GSheet'  // A Google Sheet
+  GSlide = 'GSlide'  // A Google Slide
+  Image = 'Image'    // Image file accessible by URL
+  ```
+
 - type User
 
   ```
@@ -63,16 +73,20 @@ Base URL: http://api.testing.cumuless.com/v1
   name: string
   ```
 
+- type VectorType ``= number[]``
+
 - type Source
 
   ```
   id: string
   sourceType: SourceType
+  contentType: ContentType
   title: string
   content?: string
   lastModified?: DateTime
   owner?: User
   link: string
+  vector: VectorType
   tags?: [{title: string, link: string}]
   ```
 
