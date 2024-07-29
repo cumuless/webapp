@@ -1,5 +1,13 @@
-import { Theme, ThemePanel } from "@radix-ui/themes";
+"use client"
+
+import { useEffect } from 'react';
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  return <div>hi</div>;
+
+  useEffect(() => {
+    redirect('/login');
+  }, []);
+
+  return null;
 }

@@ -2,7 +2,7 @@
 
 ## Auth
 
-Base URL: http://auth.testing.cumuless.com/
+Base URL: http://api.cumuless.com/dev/
 
 - **Login Email**
 
@@ -43,11 +43,11 @@ Base URL: http://auth.testing.cumuless.com/
 
 ## App
 
-Base URL: http://api.testing.cumuless.com/v1
+Base URL: http://api.cumuless.com/dev/
 
 **Defs**
 
-- enum SourceType
+- enum SourceType - Max Length = 10
 
   ```
   Drive = "Drive"    // Google Drive
@@ -56,7 +56,7 @@ Base URL: http://api.testing.cumuless.com/v1
   Slab = "Slab"      // Slab
   ```
 
-- enum ContentType
+- enum ContentType - Max Length = 10
 
   ```
   PDF = 'PDF'        // PDF file accessible by URL
@@ -101,6 +101,7 @@ Base URL: http://api.testing.cumuless.com/v1
 - type ChatMessage
   ```
   id: string
+  sessionID: string
   sender: "User" | "Assistant"
   content: string
   timestamp: DateTime

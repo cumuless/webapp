@@ -1,0 +1,51 @@
+VectorDB
+- Stores:
+    id: string
+    sourceType: SourceType
+    contentType: ContentType
+    title: string // Length Limit 50
+    content?: string // Length Limit 50
+    lastModified?: DateTime
+    owner?: User
+    link: string
+    vector: VectorType
+    tags?: [{title: string, link: string}]
+
+
+Some Other Database
+User Table
+uid - primary
+name - string
+quickLinks - {email: string, documentation: string, etc.}
+recents - [{docID: string, url: string, title: string, type: string, sourceType: string, contentType: string}]
+bookmarks - [{docID: string, url: string, title: string, type: string, sourceType: string, contentType: string}]
+recent_searches  - [{query: string}]
+prefersDarkMode - boolean
+
+Chat History
+chatSessionID: primary
+uid: string
+messages: [{messageID: string, content: string, sender: string, timestamp: string, sources: [url], liked: boolean}]
+
+Search History
+searchSessionID: primary
+uid: string
+timestamp: string
+results: [{title: string, sourceType: SourceType, contentType: ContentType, title: string, content?: string, lastModified?: DateTime, link: string, tags?: [{title: string, link: string}], liked: boolean}]
+
+Analytics
+uid - primary
+numSearches - number
+numChats - number
+linksClicked - number
+
+                VectorDB
+                    |
+Client  -  API Gateway (Lambda)  -  Some Other Database
+                    |
+            Non Batch Embeddings
+            Azure OpenAI
+
+
+
+VectorDB - EC2 (Running Connectors Code) - Batch + Nonbatch Embeddings
