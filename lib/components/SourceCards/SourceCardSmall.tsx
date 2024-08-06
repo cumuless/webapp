@@ -1,12 +1,14 @@
-import { Button, Flex, Heading } from "@radix-ui/themes";
+import { Button, Flex, Heading, Skeleton } from "@radix-ui/themes";
 
 type Props = {
     title: string,
     sourceType: string,
+    link?: string,
 }
 
 const SourceCardSmall = (p: Props) => {
-    return <Button variant="outline" color="gray" style={{borderRadius: 12, height: '36px', display: 'inline-block', whiteSpace: 'nowrap'}}>
+    return <a target="_blank" href={p.link}>
+    <Button variant="outline" color="gray" style={{borderRadius: 12, height: '36px', display: 'inline-block', whiteSpace: 'nowrap'}} onClick={() => {open(p.link, "_")}}>
         <Flex gap="2" align="center">
             <Flex width="24px" height="auto"><img src="/sourceIcons/slack-icon.svg"></img></Flex>
             {p.title && 
@@ -14,6 +16,7 @@ const SourceCardSmall = (p: Props) => {
             }
         </Flex> 
     </Button>
+    </a>
 }
 
 export default SourceCardSmall;

@@ -3,6 +3,7 @@ import NavBar from "@components/NavBar";
 import QuickLinks from "@components/QuickLinks";
 import { Box, Flex } from "@radix-ui/themes";
 import type { Metadata } from "next";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Flex width="100vw" height="100vh">
+    <Flex width="100vw" height="100vh" maxHeight="100vh">
         <NavBar />
         <Flex direction="column" width="100%">
           <Flex>

@@ -1,16 +1,18 @@
 "use client";
 
 import { ChatBubbleIcon, ExclamationTriangleIcon, MagnifyingGlassIcon, PersonIcon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
-import { Avatar, Flex, IconButton, Tooltip } from "@radix-ui/themes";
+import { Avatar, DropdownMenu, Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { NEUTRAL_COLOR } from "@constants";
-import { snakeToTitleCase } from "@utils";
+import { snakeToTitleCase, getInitials } from "@utils";
 import Logo from "./Logo";
 import Link from "next/link";
 import { Page, useStore } from "@store";
 import { shallow } from "zustand/shallow";
 import { usePathname } from "next/navigation";
+import { logOut } from "@lib/auth/AuthManager";
+import BugReport from "./BugReport";
 
-const getIcon = (page: Page) => {
+const getIcon = (page: string) => {
   switch (page) {
     case 'search':
       return <MagnifyingGlassIcon width="20px" height="20px" />;
@@ -28,7 +30,7 @@ const getIcon = (page: Page) => {
 };
 
 const NavBar = () => {
-    const [availablePages] = useStore(s => [s.availablePages], shallow);
+    const [availablePages, name, setAppearance] = useStore(s => [s.availablePages, s.name, s.setAppearance], shallow);
     const pathname = usePathname();
 
     return ( 
@@ -39,28 +41,44 @@ const NavBar = () => {
                   <Logo />
               </Flex>
               {availablePages.map((page, index) => (
-                  <Link href={`/${page.toLowerCase()}`} key={index}>
-                      <Flex >
-                        <Tooltip content={snakeToTitleCase(page)} delayDuration={0} side="right">
+                  <Link href={`/${page.page}`} key={index}>
+                      <Flex>
+                        <Tooltip content={snakeToTitleCase(page.page)} delayDuration={0} side="right">
                           <IconButton
-                              key={page}
-                              variant={pathname.slice(1) === page ? 'soft' : 'outline'}
+                              key={page.page}
+                              variant={pathname.slice(1) === page.page ? 'soft' : 'outline'}
                               size="4"
                               color={NEUTRAL_COLOR}
                               style={{boxShadow: 'none'}}
                           >
-                              {getIcon(page)}
+                              {getIcon(page.page)}
                           </IconButton>
                           </Tooltip>
                       </Flex>
-                  </Link>
+                  </Link> 
                   ))}
+                  <BugReport />
           </Flex>
           <Flex>
               <Flex>
-                  <IconButton color="gray" variant="outline" size="4" style={{boxShadow: 'none'}}>
-                      <Avatar size="4" variant="soft" color="gray" fallback="AH"/>
-                  </IconButton>
+                  <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                      <IconButton color="gray" variant="outline" size="4" style={{boxShadow: 'none', outline: 'none'}}>
+                          <Avatar size="4" variant="soft" color="gray" fallback={name ? getInitials(name) : ""} loading="lazy" />
+                      </IconButton>
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Sub>
+                        <DropdownMenu.SubTrigger>Appearance</DropdownMenu.SubTrigger>
+                        <DropdownMenu.SubContent>
+                          <DropdownMenu.Item onClick={() => setAppearance('light')}>Light</DropdownMenu.Item>
+                          <DropdownMenu.Item onClick={() => setAppearance('dark')}>Dark</DropdownMenu.Item>
+                        </DropdownMenu.SubContent>
+                      </DropdownMenu.Sub>
+                      <DropdownMenu.Item color="red" onClick={logOut}>Log Out</DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Root>
+                  
               </Flex>
           </Flex>
       </Flex> 

@@ -21,12 +21,15 @@ const LoginPage = () => {
         </Flex>
         <Flex direction="column" gap="3" width="100%" align="center">
           <Box width="70%">
-            <TextField.Root
-              placeholder="Password"
-              size="3"
-              variant="surface"
-              type="email"
-            />
+            <form>
+              <TextField.Root
+                placeholder="Email"
+                size="3"
+                variant="surface"
+                type="email"
+                autoComplete="email"
+              />
+            </form>
           </Box>
           <Button variant="soft" size="2">
             Send

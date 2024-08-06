@@ -27,7 +27,6 @@ const SearchBar = () => {
             textarea.style.height = '24px';
             const maxHeight = TEXT_AREA_MAX_LINES * parseInt(getComputedStyle(textarea).lineHeight, TEXT_AREA_MAX_LINES);
             textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`;
-            console.log(textarea.style.height)
             setTextareaHeight(textarea.style.height);
         }
     };
@@ -57,8 +56,8 @@ const SearchBar = () => {
                 <div className={styles.divider}></div>
                 <div>
                     <Flex gap="3" direction="column">
-                        {TEMP_RECENT_SEARCHES.map((search) => (
-                            <RecentSearch text={search} />
+                        {TEMP_RECENT_SEARCHES.map((search, index) => (
+                            <RecentSearch text={search} key={index} />
                         ))}
                     </Flex>
                 </div>

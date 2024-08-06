@@ -3,30 +3,102 @@ import { useStoreWithEqualityFn } from 'zustand/traditional';
 import { createStore } from 'zustand/vanilla';
 
 
-export enum Pages {
-    login = 'login',
-    signup = 'signup',
-    forgot_password = 'forgot_password',
-    SSO = 'SSO',
-    search = 'search',
-    chat = 'chat',
-    admin = 'admin',
-    help = 'help',
-    bug_report = 'bug_report',
+
+export type Page = {
+  page: 'login' | 'signup' | 'forgot_password' | 'SSO' | 'search' | 'chat' | 'admin' | 'help' | 'bug_report',
 }
 
-export type Page = keyof typeof Pages;
+enum SourceTypes {
+  Drive = "Drive",
+  Slack = "Slack",    
+  Gmail = "Gmail",    
+  Slab = "Slab",      
+}
+
+export type SourceType = keyof typeof SourceTypes;
+
+enum ContentTypes {
+  PDF = 'PDF',        
+  GDoc = 'GDoc',      
+  GSheet = 'GSheet',  
+  GSlide = 'GSlide',  
+  Image = 'Image',    
+}
+
+export type ContentType = keyof typeof SourceTypes;
+
+export type User = {
+  uid: string
+  name: string
+}
+
+export type VectorType = number[]
+
+export type Source = {
+  id: string
+  sourceType: SourceType
+  contentType: ContentType
+  title: string
+  content?: string
+  lastModified?: Date
+  owner?: User
+  link: string
+  vector?: VectorType
+  tags?: [{title: string, link: string}]
+}
+
+export type MessageType = {
+  id: string;
+  sessionID: string;
+  sender: "User" | "Assistant";
+  content: string;
+  timestamp?: string;
+  sources?: Source[];
+}
+
+
+export type PopupMessageType = 'Info' | 'Error' | 'Success' | 'Warning'
+export type SemanticColors = 'red' | 'green' | 'blue' | 'yellow'
+
+type PopupState = {
+  message: string,
+  type: PopupMessageType
+}
+
+export const PopupMessageColorMapping: Record<PopupMessageType, SemanticColors> = {
+    Error: 'red',
+    Success: 'green',
+    Warning: 'yellow',
+    Info: 'blue',
+}
+
+export type Appearance = 'light' | 'dark';
+export const showErrorPopup = (message: string) => store.setState({popupState: {type: 'Error', message}})
+export const showSuccessPopup = (message: string) => store.setState({popupState: {type: 'Success', message}})
+export const showInfoPopup = (message: string) => store.setState({popupState: {type: 'Info', message}})
+export const showWarningPopup = (message: string) => store.setState({popupState: {type: 'Warning', message}})
+
+export const setName = (name: string) => store.setState({name})
 
 interface State {
     availablePages: Page[],
+    popupState: PopupState,
+    name: string,
+    appearance: Appearance,
     setAvailablePages: (page: Page[]) => void;
+    setAppearance: (appearance: Appearance) => void;
     // currentPage: Page,
     // setCurrentPage: (page: Page) => void;
 }
 
 const store = createStore<State>((set, get) => ({
-    availablePages: ['search', 'chat', 'admin', 'help', 'bug_report'],
+    availablePages: [{page: 'search'}, 
+                     {page: 'chat'}],
+    popupState: {message: '', type: 'Info'},
+    name: '',
+    appearance: 'light',
     setAvailablePages: (availablePages) => set({availablePages}),
+    setAppearance: (appearance) => set({appearance}),
     // currentPage: 'search',
     // setCurrentPage: (currentPage) => set({currentPage}),
 }));
