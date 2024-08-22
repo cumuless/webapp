@@ -110,6 +110,13 @@ Base URL: http://api.cumuless.com/dev/
 
 **Routes**
 
+- **Create User**
+ - `POST /app/new-user`
+    - Params
+    ```
+    id: string,
+    name: string,
+    ```
 - **User Details**
 
   - `GET /app/me`
@@ -179,6 +186,7 @@ Base URL: http://api.cumuless.com/dev/
     - Params
       ```
       query: string
+      sessionId: string
       ```
     - Response
       ```

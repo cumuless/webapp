@@ -15,15 +15,13 @@ VectorDB
 Some Other Database
 User Table
 uid - primary
-name - string
 quickLinks - {email: string, documentation: string, etc.}
 recents - [{docID: string, url: string, title: string, type: string, sourceType: string, contentType: string}]
 bookmarks - [{docID: string, url: string, title: string, type: string, sourceType: string, contentType: string}]
 recent_searches  - [{query: string}]
-prefersDarkMode - boolean
 
 Chat History
-chatSessionID: primary
+sessionID: primary
 uid: string
 messages: [{messageID: string, content: string, sender: string, timestamp: string, sources: [url], liked: boolean}]
 

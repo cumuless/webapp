@@ -1,4 +1,5 @@
 
+import { persist } from 'zustand/middleware';
 import { useStoreWithEqualityFn } from 'zustand/traditional';
 import { createStore } from 'zustand/vanilla';
 
@@ -91,7 +92,7 @@ interface State {
     // setCurrentPage: (page: Page) => void;
 }
 
-const store = createStore<State>((set, get) => ({
+const store = createStore<State>()(persist((set) => ({
     availablePages: [{page: 'search'}, 
                      {page: 'chat'}],
     popupState: {message: '', type: 'Info'},
@@ -101,6 +102,8 @@ const store = createStore<State>((set, get) => ({
     setAppearance: (appearance) => set({appearance}),
     // currentPage: 'search',
     // setCurrentPage: (currentPage) => set({currentPage}),
+}), {
+      name: 'cumuless',
 }));
 
 function useStore(): State;

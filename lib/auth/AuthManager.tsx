@@ -30,6 +30,11 @@ export async function getAuthToken() {
   return tokens?.accessToken?.toString()
 }
 
+export async function getUserID() {
+  const { userId } = await getCurrentUser();
+  return userId;
+}
+
 export async function logIn(creds: LoginData): Promise<string | boolean> {
   try {
     const {nextStep: {signInStep}, isSignedIn} = await signIn({username: creds.email || '', password: creds.password || ''});
@@ -101,12 +106,6 @@ export async function fetchName() {
   
   log("Retrieved Users Name: " + name)
   setName(name ?? '')
-}
-
-export async function makeApiCall(url: string, method: string = 'GET') {
-  return getAuthToken().then((token) => {
-    return fetch(url, {method: method, headers: {'Authorization': `Bearer ${token}`}})
-  })
 }
 
 interface Props {

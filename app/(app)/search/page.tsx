@@ -3,17 +3,23 @@
 import Bookmarks from "@components/Bookmarks";
 import Recents from "@components/Recents";
 import SearchBar from "@components/SearchBar";
-import { fetchName, makeApiCall } from "@lib/auth/AuthManager";
+import { makeApiCall } from "@lib/api/api";
+import { fetchName } from "@lib/auth/AuthManager";
 import { useStore } from "@lib/store";
 import { Flex, Heading, Skeleton } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 
 
 const fetchData = async () => {
-    let resp = await makeApiCall('https://api.cumuless.com/search');
+    // Recent Searches
+    // Bookmarks
+    // Recents
+    // Name
+    // const recentsPromise
+    let resp = await makeApiCall('/recent_searches', 'GET');
     const json = await resp.text();
-    await fetchName();
     console.log(json)
+    await fetchName();
 }
 
 const Search = () => {

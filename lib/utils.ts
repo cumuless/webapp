@@ -42,7 +42,7 @@ export function logWarning(message: string, sender?: string | undefined) {
 }
 
 export function tokenSafeString(token: string) {
-  return token.substring(0,5);
+  return token;
 }
 
 export function logUnkownIssue(issue: string, sender: string) {

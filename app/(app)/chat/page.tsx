@@ -54,7 +54,7 @@ const tempSourceA: Source = {
 const tempSources = [tempSourceA, tempSourceA, tempSourceA, tempSourceA, tempSourceA, tempSourceA, tempSourceA, tempSourceA]
 const Chat = () => {
     return (<Flex height='91%' direction='column' align="center" >
-            <Flex flexGrow='1' overflow='scroll' direction='column' align='center'>
+            <Flex flexGrow='1' overflowY='scroll' direction='column' align='center'>
                 <Flex gap='3' direction='column' width='60%' justify='end' style={{marginTop: 'auto'}}>
                     <Flex justify='end'>
                         <Message sender="User" content={tempContent} sources={tempSources} sessionID="1" id="1" timestamp="now" />
