@@ -56,6 +56,7 @@ export const getInitials = (str: string): string =>
 export function formatTimestamp(timestamp: string): string {
   const now = new Date();
   const pastDate = new Date(timestamp);
+  // @ts-expect-error no type
   const diff = now - pastDate;
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);

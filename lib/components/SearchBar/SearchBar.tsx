@@ -74,6 +74,7 @@ const SearchBar = () => {
     }
   };
 
+  // @ts-expect-error no type
   const enterHandler = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -127,9 +128,11 @@ const SearchBar = () => {
               <Flex gap='3' direction='column'>
                 {displaySearchResults.slice(0, 6).map((search, index) => (
                   <RecentSearch
+                    // @ts-expect-error no type
                     text={search}
                     key={index}
                     onClick={() => {
+                      // @ts-expect-error no type
                       executeSearch(search);
                     }}
                   />
