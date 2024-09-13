@@ -1,27 +1,26 @@
-import { getAuthToken, getUserID } from "@lib/auth/AuthManager";
-import { store } from "@lib/store";
-import { logError } from "@lib/utils";
+import { getAuthToken, getUserID } from '@lib/auth/AuthManager';
+import { store } from '@lib/store';
+import { logError } from '@lib/utils';
 
-const BASE_URL = 'https://api.cumuless.com'
-
+const BASE_URL = 'https://api.cumuless.com';
 
 export async function fetchRecentSearches() {
   return new Promise((resolve, reject) => {
     // store.getState().
-    makeApiCall('/recent_searches', 'GET').then(response => {
+    makeApiCall('/recent_searches', 'GET')
+      .then((response) => {
         if (!response.ok) {
           reject(new Error(`HTTP error! Status: ${response.status}`));
         } else {
           return response.json();
         }
       })
-      .then(data => resolve(data))
-      .catch(error => {
-        logError(`Failed when fetching recent searches with error ${error}`, 'api.ts')
+      .then((data) => resolve(data))
+      .catch((error) => {
+        logError(`Failed when fetching recent searches with error ${error}`, 'api.ts');
       });
   });
 }
-
 
 export async function makeApiCall(
   url: string,
@@ -41,9 +40,9 @@ export async function makeApiCall(
   const options: RequestInit = {
     method,
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-    }
+    },
   };
 
   // Add the body if provided and if the method is not GET
@@ -51,5 +50,6 @@ export async function makeApiCall(
     options.body = JSON.stringify(body);
   }
 
+  console.log(`Making API call to ${finalUrl} with options: ${JSON.stringify(options)}`);
   return fetch(finalUrl, options);
 }
