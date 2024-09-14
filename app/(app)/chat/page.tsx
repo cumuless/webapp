@@ -15,7 +15,7 @@ const tempSourceA: Source = {
   sourceType: 'Slack',
   contentType: 'Slack',
   title: 'Coming Soon...',
-  link: '',
+  url: '',
 };
 
 const tempSources = [

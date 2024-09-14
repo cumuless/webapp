@@ -13,8 +13,8 @@ type Props = {
   sourceType: string;
   contentType: string;
   content: string;
-  lastUpdated: string;
-  sourceId: string;
+  lastUpdated?: string;
+  sourceId?: string;
   url?: string;
 };
 
@@ -61,7 +61,7 @@ const SourceCardLarge = (p: Props) => {
                   textOverflow: 'ellipsis',
                 }}
               >
-                Last Modified: {formatTimestamp(p.lastUpdated)}
+                Last Modified: {formatTimestamp(p.lastUpdated ?? '')}
               </Text>
             </Flex>
             <Flex width='auto' flexGrow='1' overflow='hidden' maxWidth='800px'>

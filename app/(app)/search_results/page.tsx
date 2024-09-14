@@ -16,7 +16,7 @@ const tempSearchResult: Source = {
   title: 'Slack Message',
   content:
     '...when connecting to the compiler, there are a variety of methods that can be used in order to create a mode of communication between compiler and computer. Instantiate this connection by using a i2c connector over two...',
-  link: 'https://google.com',
+  url: 'https://google.com',
 };
 
 const tempSearchResults = [
@@ -70,6 +70,7 @@ const SearchResults = () => {
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
           >
             {searchResults.map((result) => (
+              // @ts-expect-error no type
               <SourceCardLarge {...result} />
             ))}
           </Flex>

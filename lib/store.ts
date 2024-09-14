@@ -49,9 +49,9 @@ export type Source = {
   content?: string;
   lastModified?: Date;
   owner?: User;
-  link: string;
+  url: string;
   vector?: VectorType;
-  tags?: [{ title: string; link: string }];
+  tags?: [{ title: string; url: string }];
 };
 
 export type MessageType = {
