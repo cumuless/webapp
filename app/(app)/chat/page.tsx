@@ -1,7 +1,11 @@
+'use client';
+
 import ChatBar from '@components/ChatBar';
+import { makeApiCall } from '@lib/api/api';
 import Message from '@lib/components/Message/Message';
-import { Box, Flex } from '@radix-ui/themes';
-import type { Source } from '@store';
+import { Box, Flex, Heading } from '@radix-ui/themes';
+import { name, type MessageType, type Source } from '@store';
+import { useEffect, useRef, useState } from 'react';
 
 const tempContent = `
 <br>
@@ -27,33 +31,86 @@ const tempSources = [
   tempSourceA,
 ];
 const Chat = () => {
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [loading, setLoading] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  async function sendMessage(content: string) {
+    const oldMessages = messages;
+    const newMessage: MessageType = {
+      sender: 'User',
+      content: content,
+    };
+    const responseMessage: MessageType = {
+      sender: 'Assistant',
+      content: '',
+      loading: true,
+    };
+    setMessages([...oldMessages, newMessage, responseMessage]);
+    setLoading(true);
+
+    const res = await makeApiCall('/chat', 'POST', { query: content });
+    const resp = await res.json();
+    responseMessage.content = resp.message;
+    responseMessage.sources = resp.sources;
+    responseMessage.loading = false;
+    setMessages([...oldMessages, newMessage, responseMessage]);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
+  }, [messages]);
+
   return (
     <Flex height='91%' direction='column' align='center'>
-      <Flex flexGrow='1' overflowY='scroll' direction='column' align='center'>
+      {messages.length === 0 && (
+        <div
+          style={{
+            position: 'absolute',
+            left: '30%',
+            top: '30%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '5px',
+          }}
+        >
+          <Heading size='9'>Hey, {name()},</Heading>
+          <Heading size='8'>Ask me anything!</Heading>
+        </div>
+      )}
+      <Flex
+        flexGrow='1'
+        overflowY='scroll'
+        direction='column'
+        align='center'
+        width='60%'
+        ref={scrollRef}
+      >
         <Flex
           gap='3'
           direction='column'
-          width='60%'
           justify='end'
+          width='100%'
           style={{ marginTop: 'auto' }}
         >
-          <Flex justify='end'>
-            <Message
-              sender='User'
-              content={tempContent}
-              sources={tempSources}
-              sessionID='1'
-              id='1'
-              timestamp='now'
-            />
-          </Flex>
-          {/* <Flex justify='start'>
-                        <Message sender="Assistant" content={tempContent} sources={tempSources} sessionID="1" id="1" timestamp="now" />
-                    </Flex> */}
+          {messages.length !== 0 &&
+            messages.map((m, index) => (
+              <Message
+                sender={m.sender}
+                content={m.content}
+                sources={m.sources}
+                sessionID='1'
+                id='1'
+                timestamp={m.timestamp}
+                loading={index === messages.length - 1 && loading}
+              />
+            ))}
         </Flex>
       </Flex>
       <Flex width='664px' style={{ padding: '16px 0 var(--space-5) 0' }}>
-        <ChatBar />
+        <ChatBar disabled={loading} onEnter={sendMessage} />
       </Flex>
     </Flex>
   );

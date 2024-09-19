@@ -29,10 +29,12 @@ const tempSearchResults = [
   tempSearchResult,
   tempSearchResult,
 ];
+
 const SearchResults = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('query')?.trim();
   const [searchResults, setSearchResults] = useState<Source[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSearchResults() {
@@ -41,6 +43,7 @@ const SearchResults = () => {
       let resp = await makeApiCall('/search', 'POST', { query: query as string });
       const json = await resp.json();
       setSearchResults(json);
+      setLoading(false);
     }
     fetchSearchResults();
   }, []);
@@ -69,10 +72,15 @@ const SearchResults = () => {
             width='100%'
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
           >
-            {searchResults.map((result) => (
-              // @ts-expect-error no type
-              <SourceCardLarge {...result} />
-            ))}
+            {!loading
+              ? searchResults.map((result) => (
+                  // @ts-expect-error no type
+                  <SourceCardLarge {...result} />
+                ))
+              : tempSearchResults.map((result) => (
+                  // @ts-expect-error no type
+                  <SourceCardLarge {...result} loading={true} />
+                ))}
           </Flex>
         </Flex>
         <Flex
@@ -84,11 +92,9 @@ const SearchResults = () => {
             marginBottom: '80px',
             alignItems: 'center',
             justifyContent: 'center',
-            background:
-              'repeating-linear-gradient(-45deg, gray, gray 1px,transparent 1px,transparent 100px )',
+            background: 'var(--gray-a2)',
           }}
         >
-          {' '}
           Coming Soon...
         </Flex>
       </Flex>

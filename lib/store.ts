@@ -55,12 +55,13 @@ export type Source = {
 };
 
 export type MessageType = {
-  id: string;
-  sessionID: string;
-  sender: 'User' | 'Assistant';
-  content: string;
+  id?: string;
+  sessionID?: string;
+  sender?: 'User' | 'Assistant';
+  content?: string;
   timestamp?: string;
   sources?: Source[];
+  loading?: boolean;
 };
 
 export type PopupMessageType = 'Info' | 'Error' | 'Success' | 'Warning';
@@ -89,6 +90,7 @@ export const showWarningPopup = (message: string) =>
   store.setState({ popupState: { type: 'Warning', message } });
 
 export const setName = (name: string) => store.setState({ name });
+export const name = () => store.getState().name;
 
 interface State {
   availablePages: Page[];

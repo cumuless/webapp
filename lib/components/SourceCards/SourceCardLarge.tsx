@@ -1,12 +1,16 @@
-import { showWarningPopup } from '@lib/store';
+import { makeApiCall } from '@lib/api/api';
+import { showSuccessPopup, showWarningPopup } from '@lib/store';
 import { formatTimestamp } from '@lib/utils';
 import {
+  BookmarkFilledIcon,
   BookmarkIcon,
   CopyIcon,
   ExternalLinkIcon,
+  HeartFilledIcon,
   HeartIcon,
 } from '@radix-ui/react-icons';
-import { Button, Flex, Heading, IconButton, Text } from '@radix-ui/themes';
+import { Button, Flex, Heading, IconButton, Skeleton, Text } from '@radix-ui/themes';
+import { useState } from 'react';
 
 type Props = {
   title: string;
@@ -14,12 +18,15 @@ type Props = {
   contentType: string;
   content: string;
   lastUpdated?: string;
-  sourceId?: string;
+  docId?: string;
   url?: string;
+  loading?: boolean;
 };
 
 const SourceCardLarge = (p: Props) => {
-  return (
+  const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  let content = (
     <a target='_blank' href={p.url}>
       <Button
         variant='outline'
@@ -32,6 +39,9 @@ const SourceCardLarge = (p: Props) => {
           display: 'inline-block',
           whiteSpace: 'nowrap',
           padding: '10px 16px 10px 16px',
+        }}
+        onClick={() => {
+          makeApiCall('/click', 'POST', { sourceId: p.docId ?? '' });
         }}
       >
         <Flex align='center' gap='3' justify='start' height='100%'>
@@ -88,27 +98,39 @@ const SourceCardLarge = (p: Props) => {
                   style={{ boxShadow: 'none' }}
                   onClick={(e) => {
                     e.preventDefault();
-                    showWarningPopup("I haven't been coded yet :( sorry");
+                    makeApiCall('/bookmarks', 'POST', { sourceId: p.docId ?? '' });
+                    showSuccessPopup(bookmarked ? 'Removed Bookmark!' : 'Bookmarked!');
+                    setBookmarked(!bookmarked);
                   }}
                 >
-                  <BookmarkIcon width='60%' height='auto' />
+                  {bookmarked ? (
+                    <BookmarkFilledIcon width='60%' height='auto' />
+                  ) : (
+                    <BookmarkIcon width='60%' height='auto' />
+                  )}
                 </IconButton>
                 <IconButton
                   variant='outline'
                   style={{ boxShadow: 'none' }}
                   onClick={(e) => {
                     e.preventDefault();
-                    showWarningPopup("I haven't been coded yet :( sorry");
+                    showSuccessPopup('Thanks for your feedback :)');
+                    setLiked(!liked);
                   }}
                 >
-                  <HeartIcon width='60%' height='auto' />
+                  {liked ? (
+                    <HeartFilledIcon width='60%' height='auto' />
+                  ) : (
+                    <HeartIcon width='60%' height='auto' />
+                  )}
                 </IconButton>
                 <IconButton
                   variant='outline'
                   style={{ boxShadow: 'none' }}
                   onClick={(e) => {
                     e.preventDefault();
-                    showWarningPopup("I haven't been coded yet :( sorry");
+                    navigator.clipboard.writeText(p.content);
+                    showSuccessPopup("Copied! Don't forget to paste it somewhere :)");
                   }}
                 >
                   <CopyIcon width='60%' height='auto' />
@@ -120,6 +142,8 @@ const SourceCardLarge = (p: Props) => {
       </Button>
     </a>
   );
+
+  return p.loading ? <Skeleton>{content}</Skeleton> : content;
 };
 
 export default SourceCardLarge;

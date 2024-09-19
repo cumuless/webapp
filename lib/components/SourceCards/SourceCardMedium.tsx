@@ -1,14 +1,15 @@
-import { Button, Flex, Heading } from '@radix-ui/themes';
+import { Button, Flex, Heading, Skeleton } from '@radix-ui/themes';
 
 type Props = {
   title: string;
   sourceType: string;
-  link?: string;
+  url?: string;
+  loading?: boolean;
 };
 
 const SourceCardMedium = (p: Props) => {
-  return (
-    <a target='_blank' href={p.link}>
+  let content = (
+    <a target='_blank' href={p.url}>
       <Button
         variant='outline'
         color='gray'
@@ -34,6 +35,8 @@ const SourceCardMedium = (p: Props) => {
       </Button>
     </a>
   );
+
+  return p.loading ? <Skeleton>{content}</Skeleton> : content;
 };
 
 export default SourceCardMedium;

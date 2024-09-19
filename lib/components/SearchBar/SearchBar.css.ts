@@ -4,6 +4,7 @@ export const outerContainer = style({
   width: '100%',
   height: '56px',
   position: 'relative',
+  zIndex: 5,
 });
 export const container = style({
   position: 'absolute',

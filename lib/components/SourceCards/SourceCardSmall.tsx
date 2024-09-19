@@ -3,12 +3,12 @@ import { Button, Flex, Heading, Skeleton } from '@radix-ui/themes';
 type Props = {
   title: string;
   sourceType: string;
-  link?: string;
+  url?: string;
+  loading?: boolean;
 };
-
 const SourceCardSmall = (p: Props) => {
-  return (
-    <a target='_blank' href={p.link}>
+  const content = (
+    <a target='_blank' href={p.url} rel='noopener noreferrer'>
       <Button
         variant='outline'
         color='gray'
@@ -19,12 +19,12 @@ const SourceCardSmall = (p: Props) => {
           whiteSpace: 'nowrap',
         }}
         onClick={() => {
-          open(p.link, '_');
+          open(p.url, '_');
         }}
       >
         <Flex gap='2' align='center'>
           <Flex width='24px' height='auto'>
-            <img src='/sourceIcons/drive-icon.svg'></img>
+            <img src='/sourceIcons/drive-icon.svg' alt='Source Icon'></img>
           </Flex>
           {p.title && (
             <Heading size='2' weight='bold'>
@@ -35,6 +35,8 @@ const SourceCardSmall = (p: Props) => {
       </Button>
     </a>
   );
+
+  return p.loading ? <Skeleton>{content}</Skeleton> : content;
 };
 
 export default SourceCardSmall;

@@ -10,16 +10,6 @@ import { Flex, Heading, Skeleton } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
 
 const fetchData = async () => {
-  // Recent Searches
-  // Bookmarks
-  // Recents
-  // Name
-  // const recentsPromise
-  let resp = await makeApiCall('/recent_searches', 'GET');
-  // let bookmarksresp = await makeApiCall('/bookmarks', 'GET');
-  // let recentsresp = await makeApiCall('/recents', 'GET');
-  const json = await resp.text();
-  console.log(json);
   await fetchName();
 };
 
