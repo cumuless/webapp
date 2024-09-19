@@ -28,7 +28,7 @@ const LoginPage = () => {
   return (
     <>
       {showPasswordReset ? (
-        <SetPasswordPage email={emailTextboxRef.current?.value} />
+        <SetPasswordPage email={emailTextboxRef.current?.value ?? ''} />
       ) : (
         <Flex gap='5' align='center' direction='column' width='80%'>
           <Flex direction='column' gap='4' width='100%' align='center'>
