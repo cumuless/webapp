@@ -50,6 +50,5 @@ export async function makeApiCall(
     options.body = JSON.stringify(body);
   }
 
-  console.log(`Making API call to ${finalUrl} with options: ${JSON.stringify(options)}`);
   return fetch(finalUrl, options);
 }

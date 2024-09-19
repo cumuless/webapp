@@ -4,7 +4,7 @@ import ChatBar from '@components/ChatBar';
 import { makeApiCall } from '@lib/api/api';
 import Message from '@lib/components/Message/Message';
 import { Box, Flex, Heading } from '@radix-ui/themes';
-import { name, type MessageType, type Source } from '@store';
+import { name, showErrorPopup, type MessageType, type Source } from '@store';
 import { useEffect, useRef, useState } from 'react';
 
 const tempContent = `
@@ -50,10 +50,14 @@ const Chat = () => {
     setLoading(true);
 
     const res = await makeApiCall('/chat', 'POST', { query: content });
-    const resp = await res.json();
-    responseMessage.content = resp.message;
-    responseMessage.sources = resp.sources;
-    responseMessage.loading = false;
+    try {
+      const resp = await res.json();
+      responseMessage.content = resp.message;
+      responseMessage.sources = resp.sources;
+      responseMessage.loading = false;
+    } catch (error) {
+      showErrorPopup('An internal error occurred...');
+    }
     setMessages([...oldMessages, newMessage, responseMessage]);
     setLoading(false);
   }
