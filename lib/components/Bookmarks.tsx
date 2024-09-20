@@ -31,11 +31,12 @@ const Bookmarks = () => {
           ))}
         {!loading &&
           bookmarks.length !== 0 &&
-          bookmarks.map((bookmark) => (
+          bookmarks.map((bookmark, index) => (
             <SourceCardSmall
               title={bookmark.title}
               sourceType={bookmark.sourceType}
               url={bookmark.url}
+              key={index}
             />
           ))}
         {!loading && bookmarks.length === 0 && (

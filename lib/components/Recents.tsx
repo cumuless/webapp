@@ -36,9 +36,9 @@ const Recents = () => {
           ))}
         {!loading &&
           recents.length !== 0 &&
-          recents.map((recent) => (
+          recents.map((recent, index) => (
             <SourceCardMedium
-              key={recent.id}
+              key={index}
               title={recent.title}
               sourceType={recent.sourceType}
               url={recent.url}

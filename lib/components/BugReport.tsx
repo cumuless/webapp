@@ -1,3 +1,4 @@
+import { makeApiCall } from '@lib/api/api';
 import { NEUTRAL_COLOR } from '@lib/constants';
 import { showSuccessPopup, useStore } from '@lib/store';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
@@ -10,9 +11,18 @@ import {
   TextArea,
   Tooltip,
 } from '@radix-ui/themes';
-import { Component, ComponentType } from 'react';
+import { Component, ComponentType, useRef } from 'react';
 
 const BugReport = () => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  function submitReport() {
+    const feedback = textareaRef.current?.value.trim();
+    if (!feedback) return;
+    makeApiCall('/feedback', 'POST', { feedback: feedback });
+    showSuccessPopup('Thank you for your feedback :)');
+  }
+
   return (
     <Flex>
       <Dialog.Root>
@@ -42,18 +52,16 @@ const BugReport = () => {
               <Text as='div' size='2' mb='1' weight='bold'>
                 Bug Description
               </Text>
-              <TextArea placeholder='ex: Search page gave me error with code NOT_FOUND...' />
+              <TextArea
+                placeholder='ex: Search page gave me error with code NOT_FOUND...'
+                ref={textareaRef}
+              />
             </label>
           </Flex>
 
           <Flex gap='3' mt='4' justify='end'>
             <Dialog.Close>
-              <Button
-                color='jade'
-                onClick={() => {
-                  showSuccessPopup('Thank you for your feedback :)');
-                }}
-              >
+              <Button color='jade' onClick={submitReport}>
                 Submit
               </Button>
             </Dialog.Close>
