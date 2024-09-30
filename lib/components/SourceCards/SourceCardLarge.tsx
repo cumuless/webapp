@@ -28,10 +28,10 @@ const SourceCardLarge = (p: Props) => {
   const [bookmarked, setBookmarked] = useState(false);
   let content = (
     <a target='_blank' href={p.url}>
-      <Button
-        variant='outline'
-        color='gray'
+      <Flex
         style={{
+          background: 'var(--gray-a2)',
+          border: '1px solid var(--gray-a6)',
           borderRadius: 12,
           height: '180px',
           width: '100%',
@@ -88,12 +88,13 @@ const SourceCardLarge = (p: Props) => {
               </Text>
             </Flex>
             <Flex width='100%' justify='between'>
-              <Button variant='soft'>
+              <Button variant='soft' color='gray'>
                 Open
                 <ExternalLinkIcon />
               </Button>
               <Flex gap='1'>
                 <IconButton
+                  color='gray'
                   variant='outline'
                   style={{ boxShadow: 'none' }}
                   onClick={(e) => {
@@ -110,6 +111,7 @@ const SourceCardLarge = (p: Props) => {
                   )}
                 </IconButton>
                 <IconButton
+                  color='gray'
                   variant='outline'
                   style={{ boxShadow: 'none' }}
                   onClick={(e) => {
@@ -125,6 +127,7 @@ const SourceCardLarge = (p: Props) => {
                   )}
                 </IconButton>
                 <IconButton
+                  color='gray'  
                   variant='outline'
                   style={{ boxShadow: 'none' }}
                   onClick={(e) => {
@@ -139,7 +142,7 @@ const SourceCardLarge = (p: Props) => {
             </Flex>
           </Flex>
         </Flex>
-      </Button>
+      </Flex>
     </a>
   );
 

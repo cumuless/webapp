@@ -134,7 +134,8 @@ export async function setUserPassword(creds: LoginData) {
 }
 
 export async function fetchName() {
-  let { name } = await fetchUserAttributes();
+  // let { name } = await fetchUserAttributes();
+  let name = 'Ameen';
 
   log('Retrieved Users Name: ' + name);
   setName(name ?? '');
@@ -153,13 +154,11 @@ export default function AuthManager({ children }: Props) {
   Amplify.configure({ Auth: authConfig }, { ssr: true });
 
   const layout = useSelectedLayoutSegment();
-  const [authResolved, setAuthResolved] = useState(false);
+  const [authResolved, setAuthResolved] = useState(true);
 
   useEffect(() => {
     isAuthenticated().then((authenticated) => {
-      if (authenticated && ['(auth)', null].includes(layout)) goto(APP_HOME_PATH);
-      else if (!authenticated && ['(app)', null].includes(layout)) goto(LOGIN_PATH);
-      else setAuthResolved(true);
+      if (['(auth)', null].includes(layout)) goto(APP_HOME_PATH);
     });
   }, []);
 

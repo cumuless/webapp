@@ -109,7 +109,7 @@ const store = createStore<State>()(
     (set) => ({
       availablePages: [{ page: 'search' }, { page: 'chat' }],
       popupState: { message: '', type: 'Info' },
-      name: '',
+      name: 'Ameen',
       appearance: 'light',
       setAvailablePages: (availablePages) => set({ availablePages }),
       setAppearance: (appearance) => set({ appearance }),

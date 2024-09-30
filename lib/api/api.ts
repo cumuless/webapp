@@ -2,7 +2,7 @@ import { getAuthToken, getUserID } from '@lib/auth/AuthManager';
 import { store } from '@lib/store';
 import { logError } from '@lib/utils';
 
-const BASE_URL = 'https://api.cumuless.com';
+const BASE_URL = 'https://demo.api.cumuless.com';
 
 export async function fetchRecentSearches() {
   return new Promise((resolve, reject) => {
@@ -28,11 +28,11 @@ export async function makeApiCall(
   params: Record<string, string> = {},
   body: object | null = null
 ) {
-  const token = await getAuthToken();
-  const userId = await getUserID();
+  // const token = await getAuthToken();
+  // const userId = await getUserID();
 
   // Construct the URL with query parameters if any
-  params['userId'] = userId;
+  params['userId'] = '1';
 
   const queryParams = new URLSearchParams(params).toString();
   const finalUrl = queryParams ? `${BASE_URL}${url}?${queryParams}` : url;
@@ -40,7 +40,7 @@ export async function makeApiCall(
   const options: RequestInit = {
     method,
     headers: {
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   };

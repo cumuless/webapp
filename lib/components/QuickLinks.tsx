@@ -8,7 +8,7 @@ const QuickLinks = () => {
     <Flex gap='1'>
       <a
         target='_blank'
-        href='https://discord.com/channels/808138357028028446/808138413043220490'
+        href='https://slack.com'
       >
         <IconButton
           variant='outline'
@@ -22,13 +22,13 @@ const QuickLinks = () => {
       </a>
       <a
         target='_blank'
-        href='https://drive.google.com/drive/u/0/folders/0B3MfQ9M12F66TmUxZi13XzczMm8'
+        href='https://atlassian.com/software/confluence'
       >
         <IconButton variant='outline' color='gray' size='4' style={{ boxShadow: 'none' }}>
           <FileTextIcon width='18px' height='18px' />
         </IconButton>
       </a>
-      <a target='_blank' href='https://outlook.office365.com/mail'>
+      <a target='_blank' href='https://gmail.com'>
         <IconButton variant='outline' color='gray' size='4' style={{ boxShadow: 'none' }}>
           <EnvelopeClosedIcon width='18px' height='18px' />
         </IconButton>

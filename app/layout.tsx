@@ -6,8 +6,8 @@ import ThemeManager from '@lib/components/Theme/ThemeManager';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Cumuless | UWMSA',
-  description: 'UWMSA Global Search powered by Cumuless',
+  title: 'Cumuless | Demo',
+  description: 'Demo of Global Search powered by Cumuless',
 };
 
 export default function RootLayout({

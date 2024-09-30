@@ -20,6 +20,7 @@ const SourceCardMedium = (p: Props) => {
           display: 'inline-block',
           whiteSpace: 'nowrap',
           padding: '12px',
+          overflow: 'hidden',
         }}
       >
         <Flex align='center' direction='column' gap='2' justify='start' height='100%'>
