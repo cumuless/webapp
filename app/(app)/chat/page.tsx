@@ -68,7 +68,7 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <Flex height='91%' direction='column' align='center'>
+    <Flex direction='column' align='center' style={{ flex: 1 }}>
       {messages.length === 0 && (
         <div
           style={{
@@ -113,7 +113,7 @@ const Chat = () => {
             ))}
         </Flex>
       </Flex>
-      <Flex width='664px' style={{ padding: '16px 0 var(--space-5) 0' }}>
+      <Flex width='794px' style={{ padding: '16px 0 var(--space-5) 0' }}>
         <ChatBar disabled={loading} onEnter={sendMessage} />
       </Flex>
     </Flex>

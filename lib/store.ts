@@ -12,6 +12,7 @@ export type Page = {
     | 'chat'
     | 'admin'
     | 'help'
+    | 'email'
     | 'bug_report';
 };
 
@@ -92,13 +93,20 @@ export const showWarningPopup = (message: string) =>
 export const setName = (name: string) => store.setState({ name });
 export const name = () => store.getState().name;
 
+export type EmailHandler = {
+  email: string;
+};
+
 interface State {
   availablePages: Page[];
   popupState: PopupState;
   name: string;
   appearance: Appearance;
+  emailHandles: EmailHandler[];
   setAvailablePages: (page: Page[]) => void;
   setAppearance: (appearance: Appearance) => void;
+  setEmailHandles: (emailHandles: EmailHandler[]) => void;
+  addEmailHandle: (email: string) => void;
   resetPopup: () => void;
   // currentPage: Page,
   // setCurrentPage: (page: Page) => void;
@@ -107,18 +115,30 @@ interface State {
 const store = createStore<State>()(
   persist(
     (set) => ({
-      availablePages: [{ page: 'search' }, { page: 'chat' }],
+      availablePages: [{ page: 'search' }, { page: 'chat' }, { page: 'email' }],
       popupState: { message: '', type: 'Info' },
       name: 'Ameen',
       appearance: 'light',
+      emailHandles: [
+        { email: 'csupport@your-company.com' },
+        { email: 'sales@your-company.com' },
+        { email: 'marketing@your-company.com' },
+        { email: 'outreach@your-company.com' },
+        { email: 'hr@your-company.com' },
+        { email: 'logistics@your-company.com' },
+      ],
       setAvailablePages: (availablePages) => set({ availablePages }),
       setAppearance: (appearance) => set({ appearance }),
+      setEmailHandles: (emailHandles) => set({ emailHandles }),
+      addEmailHandle: (email) => {
+        set({ emailHandles: [...store.getState().emailHandles, { email }] });
+      },
       resetPopup: () => set({ popupState: { message: '', type: 'Info' } }),
       // currentPage: 'search',
       // setCurrentPage: (currentPage) => set({currentPage}),
     }),
     {
-      name: 'cumuless',
+      name: 'CUMUless',
     }
   )
 );

@@ -4,8 +4,8 @@ import ChatBar from '@components/ChatBar';
 import { makeApiCall } from '@lib/api/api';
 import Message from '@lib/components/Message/Message';
 import SourceCardLarge from '@lib/components/SourceCards/SourceCardLarge';
-import { Box, Flex } from '@radix-ui/themes';
-import type { Source } from '@store';
+import { Box, Button, Flex } from '@radix-ui/themes';
+import { showInfoPopup, type Source } from '@store';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -35,6 +35,7 @@ const SearchResults = () => {
   const query = searchParams.get('query')?.trim();
   const [searchResults, setSearchResults] = useState<Source[]>([]);
   const [loading, setLoading] = useState(true);
+  // const [chatting, setChatting] = useState(false);
 
   useEffect(() => {
     async function fetchSearchResults() {
@@ -44,6 +45,8 @@ const SearchResults = () => {
       const json = await resp.json();
       setSearchResults(json);
       setLoading(false);
+
+      // showInfoPopup(`Chat is ${json['is_chat_useful'] ? '' : 'not '}useful!`);
     }
     fetchSearchResults();
   }, []);
@@ -72,7 +75,7 @@ const SearchResults = () => {
             width='100%'
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
           >
-            {!loading
+            {!loading && searchResults
               ? searchResults.map((result) => (
                   // @ts-expect-error no type
                   <SourceCardLarge {...result} />
@@ -95,7 +98,7 @@ const SearchResults = () => {
             background: 'var(--gray-a2)',
           }}
         >
-          Coming Soon...
+          <Button size='3'>Want to chat?</Button>
         </Flex>
       </Flex>
     </Flex>

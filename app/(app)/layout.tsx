@@ -10,11 +10,11 @@ export default function RootLayout({
   return (
     <Flex width='100vw' height='100vh' maxHeight='100vh'>
       <NavBar />
-      <Flex direction='column' width='100%'>
+      <Flex direction='column' width='100%' style={{ flex: 1 }}>
         <Flex>
           <Header />
         </Flex>
-        {children}
+        <Flex style={{ flex: 1, overflow: 'scroll' }}>{children}</Flex>
       </Flex>
     </Flex>
   );
